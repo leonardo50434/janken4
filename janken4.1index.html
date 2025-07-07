@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>じゃんけんマシーン</title>
+</head>
+<body>
+  <p>名前を入力してね：<input id="name"></p>
+
+  <button onclick="play('グー')">グー</button>
+  <button onclick="play('チョキ')">チョキ</button>
+  <button onclick="play('パー')">パー</button>
+
+  <div id="result" style="white-space: pre-line; margin-top: 1em;"></div>
+
+  <script>
+    const winComments = ["ほんまに強いな", "弟子入りさせてくれや"];
+    const loseComments = ["まだまだやな", "なんで負けたか明日までに考えといてください"];
+
+    function play(userChoice) {
+      const name = document.getElementById('name').value;
+      if (!name) {
+        document.getElementById('result').textContent = "名前を入力してね！";
+        return;
+      }
+
+      const hands = ["グー", "チョキ", "パー"];
+      const enemyChoice = hands[Math.floor(Math.random() * 3)];
+      let result = `${name} さん：${userChoice} VS コンピュータ：${enemyChoice}\n`;
+
+      if (userChoice === enemyChoice) {
+        result += "引き分けだよ！もう一回！";
+      } else if (
+        (userChoice === "グー" && enemyChoice === "チョキ") ||
+        (userChoice === "チョキ" && enemyChoice === "パー") ||
+        (userChoice === "パー" && enemyChoice === "グー")
+      ) {
+        result += `${name}さんの勝ち！\n${winComments[Math.floor(Math.random() * winComments.length)]}`;
+      } else {
+        result += `${name}さんの負け...\n${loseComments[Math.floor(Math.random() * loseComments.length)]}`;
+      }
+
+      document.getElementById('result').textContent = result;
+    }
+  </script>
+</body>
+</html>
